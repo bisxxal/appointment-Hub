@@ -1,19 +1,22 @@
+ 
 import { userAppointments } from "@/actions/server.actions"
-import Pagination from "@/components/Pagenation";
+import Pagination from "@/components/Pagenation"; 
+import { useAuth, useUser } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server"; 
 import { GoHourglass } from "react-icons/go";
 import { MdDone } from "react-icons/md";
-import { RxCross2 } from "react-icons/rx";
+import { RxCross2 } from "react-icons/rx"; 
 
-async function page({searchParams}:{searchParams:{[key:string]:string|undefined};}) {
+ async function page({searchParams}:{searchParams:{[key:string]:string|undefined};}) {
     const {page , ...quaryParmas} = searchParams;
     
     const p = page ?parseInt(page): 1;
 
-
-    const app = await userAppointments(1 , '6706a0ab86b63338a36c44d6')
-
-    console.log(app);
-
+    
+    const { userId: clerkUserId } = await auth(); 
+    const app = await userAppointments(1 , clerkUserId!)
+  
+ 
     function formatDate(dateStr: Date): string {
         const date = new Date(dateStr);
          

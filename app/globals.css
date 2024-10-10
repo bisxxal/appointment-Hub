@@ -50,3 +50,56 @@ body{
 .react-datepicker__day:hover{
   @apply !bg-green-300;
 }
+
+
+
+
+.cl-internal-1p733cp   {
+  @apply bg-[#191120] text-zinc-100 !important;
+  background: linear-gradient(317deg, #9a83d3 -164%, #080312 91%) !important;
+}
+ .cl-internal-4x6jej {
+  @apply bg-zinc-800 text-zinc-100 !important;
+
+}
+.cl-socialButtonsBlockButtonText{
+  @apply text-zinc-100;
+}
+.str-video__call-stats {
+  max-width: 500px;
+  position: relative;
+}
+
+.str-video__speaker-layout__wrapper {
+  max-height: 700px;
+}
+
+.cl-internal-1c7fjmu  ,.cl-internal-1c7fjmu ,.cl-internal-1tpvhd8 {
+  color: white !important;
+}
+
+.str-video__menu-container {
+  color: white;
+}
+
+.str-video__notification {
+  color: white;
+}
+
+.str-video__participant-list {
+  background-color: #1c1f2e;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  height: 100%;
+}
+
+.str-video__call-controls__button {
+  height: 40px;
+}
+.cl-internal-1hp5nqm{
+  display: none;
+}
+.cl-internal-1dauvpw{
+  display: none;
+}

@@ -43,40 +43,13 @@ export const Allappointments = async (page: number ) => {
   };
 export const userAppointments = async (page: number ,   userId:string) => {
     try {
-      // const users = await prisma.appointment.findMany({
-      //   take:6,
-      //   skip:6*(page-1) ,
-      //   where:{
-      //     userId:userId
-      //   },
-      //   select: {
-      //     id: true,
-      //     createdAt: true,
-      //     status: true,
-      //     schedule:true,
-      //     doctor: {
-      //       select: {
-      //         id: true,
-      //         name: true,
-      //         hospital: {
-      //           select: {
-      //             id: true,
-      //             name: true
-      //           }
-      //         }
-      //       }
-      //     },
-      //     user: {
-      //       select: {
-      //         id: true,
-      //         username: true
-      //       }
-      //     }
-      //   }
-      // });
-  
-      // const totalAppointments = await prisma.appointment.count();
-
+    
+      
+      if(!userId){
+        // console.log("in server " , userId);
+        return { users: [], totalAppointments: 0 }; 
+      }
+      
 
       const [users , totalAppointments] = await prisma.$transaction([
         prisma.appointment.findMany({
@@ -291,7 +264,7 @@ export const createUser = async (user:any) => {
       data:{
         username:user.username,
         email:user.email,
-
+        clerkId:user.clerkId 
       }
     })
     console.log(newUser);

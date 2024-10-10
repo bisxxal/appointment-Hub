@@ -1,5 +1,6 @@
 import { Allappointments } from "@/actions/server.actions";
 import AdminTabel from "@/components/AdminTabel";
+import { auth } from "@clerk/nextjs/server";
 import { GoHourglass } from "react-icons/go";
 import { IoIosWarning } from "react-icons/io";
 import { MdOutlinePendingActions } from "react-icons/md";
@@ -22,6 +23,10 @@ async function Page({searchParams}:{searchParams:{[key:string]:string|undefined}
   const canceledAppointmentsCount = users.filter(
     (user) => user?.status && user?.status.trim().toLowerCase() === "cancelled"
   ).length;
+
+   
+  const { userId: clerkUserId } = await auth(); 
+  console.log("Clerk userId: ", clerkUserId);
 
   return (
     <>

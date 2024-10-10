@@ -11,7 +11,7 @@ model User {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   email    String @unique
   username String
-
+  clerkId  String?
   hospitalId    String?       @db.ObjectId
   appointmentId String?       @db.ObjectId
   hospital      Hospital[]

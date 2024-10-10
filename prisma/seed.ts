@@ -53,6 +53,7 @@ async function main() {
         data: {
           email: `user${index + 1}@example.com`,
           username: `user${index + 1}`,
+          clerkId:`user${index+2}`,
           hospitalId: hospitals[index % hospitals.length].id,
         },
       })
