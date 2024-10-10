@@ -222,31 +222,7 @@ export const findSpecialization = async (id: string) => {
         
     }
 }
-
-// export const secheduleAppointment = async ({ userId , appointmentId  , schedule} : { appointmentId :string , userId : string  , schedule : any}) => {  
-
-//   try {
-
-//     console.log(userId , schedule , appointmentId);
-    
-//     await prisma.appointment.update({
-//       where:{
-//         id: appointmentId,
-//         userId: userId 
-//       },
-//       data:{
-//         status: 'scheduled',
-//         schedule: schedule
-//       }
-//     })
-//     console.log('schuduled');
-    
-//   } catch (error) {
-//        console.log('eroor ' , error);
-       
-//   }
-// }
-
+ 
 export const scheduleAppointment = async ({ userId, appointmentId, schedule }: { appointmentId: string; userId: string; schedule: any }) => {
   try {
     console.log(userId, schedule, appointmentId);
@@ -293,10 +269,36 @@ export const CancelAppointment = async ({ userId , appointmentId ,status } : { a
       },
       data:{
         status: status,
-        // schedule: schedule
+        schedule: null
       }
     })
   } catch (error) {
 
+  }
+}
+
+interface uerProps {
+  user: {
+    clerkId: string;
+    email: string;
+    username: string;
+  }
+}
+export const createUser = async (user:any) => {  
+
+  try {
+    const newUser = await prisma.user.create({
+      data:{
+        username:user.user.username,
+        email:user.user.email,
+
+      }
+    })
+    console.log(newUser);
+    
+    return JSON.parse(JSON.stringify(newUser))
+  } catch (error) {
+    console.log('error when creating user' , error);
+    
   }
 }

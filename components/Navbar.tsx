@@ -1,5 +1,11 @@
 import Link from "next/link";
 import React from "react";
+import { 
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
 
 function Navbar() {
   return (
@@ -9,8 +15,15 @@ function Navbar() {
       <div className=" items-center gap-4 flex">
         <Link href={"/admin"}>admin</Link>
         <Link href={"/my-profile"}>My Profile</Link>
+          <SignedOut>
+              {/* <SignInButton /> */}
+              <Link href={'/sign-in'}>Sign-in</Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
 
-        <div className=" h-12 w-12 bg-emerald-500 rounded-full">admin</div>
+       
       </div>
     </div>
   );
