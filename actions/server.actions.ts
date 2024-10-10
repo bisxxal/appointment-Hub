@@ -289,8 +289,8 @@ export const createUser = async (user:any) => {
   try {
     const newUser = await prisma.user.create({
       data:{
-        username:user.user.username,
-        email:user.user.email,
+        username:user.username,
+        email:user.email,
 
       }
     })

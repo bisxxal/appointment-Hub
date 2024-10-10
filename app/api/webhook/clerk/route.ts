@@ -2,10 +2,7 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { clerkClient, WebhookEvent } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
-import { createUser } from '@/actions/server.actions'
-// import { createUser, deleteUser, updateUser } from '@/lib/actions/user.actions'
-// import { CreateUserParams, UpdateUserParams } from '@/types'
-
+import { createUser } from '@/actions/server.actions' 
 export async function POST(req: Request) { 
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
 
@@ -49,7 +46,7 @@ export async function POST(req: Request) {
 
 
   if(eventType === 'user.created') {
-    const { id, email_addresses, image_url, first_name, last_name, username } = evt.data;
+    const { id, email_addresses,  username } = evt.data;
 
     const user = {
       clerkId: id,
