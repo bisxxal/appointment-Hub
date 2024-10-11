@@ -4,6 +4,7 @@ import { findAppointment } from '@/actions/server.actions';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { GoHourglass } from 'react-icons/go';
 
 function Successpage() {
   const p = useSearchParams();
@@ -36,14 +37,15 @@ function Successpage() {
         <p className='text-gray-500 font-semibold mt-2'>
           We will be in touch shortly to confirm.
         </p>
-        <p className='mt-2 bg-[skyblue] text-blue-500 font-semibold p-1 rounded-2xl px-4'>
+        <p className='mt-2 flex items-center gap-2 bg-[#152432] text-[#79b5ec]  py-2 rounded-full px-6'>
+        <GoHourglass className=' text-lg' />
           {data?.status}
         </p>
       </div>
 
       <div className='border-y-2 h-20 flex justify-between items-center border-[#9e9e9e1f] p-2'>
         <p>Requested <span className='text-[#f694ff]'>appointment</span> details:</p>
-        <div className='border rounded-xl border-[#ffffff3d] p-4'>{data?.doctor?.name}</div>
+        <div className=' rounded-xl footer2  px-6 py-2'>{data?.doctor?.name}</div>
         <p>{data?.createdAt ? new Intl.DateTimeFormat("en-IN").format(new Date(data.createdAt)) : ''}</p>
       </div>
     </div>

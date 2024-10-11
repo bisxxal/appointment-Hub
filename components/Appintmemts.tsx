@@ -2,6 +2,7 @@
 
 import { createdAppointment, findDoctor, findSpecialization } from "@/actions/server.actions";
 import { useUser } from "@clerk/nextjs";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 function Appointments({ hospital,}: {hospital: { id: string; name: string }[];}) {
@@ -33,17 +34,18 @@ function Appointments({ hospital,}: {hospital: { id: string; name: string }[];})
     if(res.success === true){
       router.push(`success?appId=${res.id}`)
     }
-    
   };
 
   return (
-    <form className=" flex flex-col gap-3" onSubmit={handleSubmit}>
-    <div>
+    <div className=" w-full h-[86vh] flex  rounded-2xl overflow-x-hidden max-md:flex-col">
+    <form className=" flex w-[66%] max-md:p-7  p-20 pl-24 flex-col gap-3 footer2 max-md:w-full mx-auto " onSubmit={handleSubmit}>
+      <h1 className=" text-4xl font-semibold logo2 ">Create Appointment</h1>
+    <div className=" ">
       <h1>Select Hospital</h1>
       <select
       required
         onChange={(e) => setHospitalId(e.target.value)}
-        className="bg-transparent footer inshadow border-y-0 w-60 border-2 border-[#ffffff31] rounded-lg p-2 px-3"
+        className="bg-transparent footer inshadow border-y-0 w-4/5 max-md:w-[90%] border-2 border-[#ffffff31] rounded-lg p-2 px-3"
         name="hospital"
         value={hospitalId}
       >
@@ -57,7 +59,7 @@ function Appointments({ hospital,}: {hospital: { id: string; name: string }[];})
 
       <div>
         <h1>Select Disease</h1>
-        <select required className="bg-transparent footer inshadow border-y-0 w-60 border-2 border-[#ffffff2b] rounded-lg p-2 px-3" name="spcial">
+        <select required className="bg-transparent footer inshadow border-y-0 w-4/5 max-md:w-[90%] border-2 border-[#ffffff2b] rounded-lg p-2 px-3" name="spcial">
           {
             special && special.map((item:any)=>{
               return <option className=" bg-[#0f0a13]" key={item.id} value={item.id}>{item.name}</option>
@@ -68,7 +70,7 @@ function Appointments({ hospital,}: {hospital: { id: string; name: string }[];})
 
       <div>
         <h1>Select doctor</h1>
-      <select required className="bg-transparent footer inshadow border-y-0 w-60 border-2 border-[#ffffff31] rounded-lg p-2 px-3" name="doctor">
+      <select required className="bg-transparent footer inshadow border-y-0 w-4/5 max-md:w-[90%] border-2 border-[#ffffff31] rounded-lg p-2 px-3" name="doctor">
       {
         !special && !hospitalId && <option className=" bg-[#0f0a13]" value="">Select a doctor</option>
       }
@@ -84,8 +86,11 @@ function Appointments({ hospital,}: {hospital: { id: string; name: string }[];})
       </select>
       </div>
  
-      <button className=" bg-blue-500 px-4 py-1 w-fit rounded-lg" type="submit">Create Appointment</button>
+      <button className=" bg-blue-500 px-4 mt-4 py-1 w-4/5 max-md:w-[90%] rounded-lg" type="submit">Create Appointment</button>
     </form>
+
+    <Image className="  " src={'/book.png'} alt="" width={1200} height={1200} />
+    </div>
   );
 }
 

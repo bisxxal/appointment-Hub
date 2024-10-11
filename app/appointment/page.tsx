@@ -10,7 +10,7 @@ const AppoinmentPage = async() => {
 
     if(role !== 'admin'){
  return (
-    <div className=" w-full h-screen px-10 mt-5 max-md:px-2 max-lg:px-4">
+    <div className=" w-full h-fit px-8 mt-3 max-md:px-2 max-lg:px-4">
           {hospital && <Appintmemts hospital={hospital} />}
     </div>
   )

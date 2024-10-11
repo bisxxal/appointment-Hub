@@ -31,64 +31,63 @@ function AdminTabel({ users ,count ,page }: userProps) {
           <p className=" max-md:hidden">Date</p>
           <p>Status</p>
           <p>Doctor</p>
-          <p>Actions</p>
-          {/* <p> </p> */}
+          <p>Actions</p> 
         </div>
 
-        <div>
-          {Array.isArray(users) && users.length > 0 ? (
-            users.map((item: any) => (
-              <div
-                key={item.id}
-                className="grid grid-cols-6 max-md:grid-cols-5 w-full overflow-x-auto items-center max-md:text-sm justify-between pl-10 max-md:px-1 max-lg:px-2 h-14 border-b-2 border-[#9e9e9e1f]"
+    <div>
+      {Array.isArray(users) && users.length > 0 ? (
+        users.map((item: any) => (
+          <div
+            key={item.id}
+            className="grid grid-cols-6 max-md:grid-cols-5 w-full overflow-x-auto items-center max-md:text-sm justify-between pl-10 max-md:px-1 max-lg:px-2 h-14 border-b-2 border-[#9e9e9e1f]"
+          >
+            <p className=" line-clamp-1">{item?.user?.username}</p>
+            <p  className=" max-md:hidden">
+              {new Intl.DateTimeFormat("en-IN").format(
+                new Date(item.createdAt)
+              )}
+            </p>
+            <p className={`${item.status.toLowerCase() === 'scheduled' ? 'text-[#24ae7c] bg-[#0d2a1f]' : item.status.toLowerCase() === 'pending' ? 'bg-[#152432] text-[#79b5ec]' : 'bg-[#3e1716] text-[#f37877]'} w-fit max-md:px-1 max-md:text-xs px-3 py-[2px] flex items-center gap-1 rounded-2xl`}  >
+            {item.status.toLowerCase() === 'scheduled' ? <MdDone /> : item.status.toLowerCase() === 'pending' ? <GoHourglass /> : <RxCross2 /> }
+              {item?.status}</p>
+
+            <p className=" line-clamp-1">{item.doctor.name}</p>
+
+            {item.schedule ? (
+              <p>{new Intl.DateTimeFormat("en-IN").format(new Date(item.schedule))}</p>
+            ) : (
+              <p
+                className="cursor-pointer flex items-center gap-2 max-md:gap-1 px-3 max-md:px-1 max-md:text-sm py-1 w-fit rounded-lg text-[#24ae7c] bg-[#0d2a1f]"
+                onClick={() => setOpenScheduleId(openScheduleId === item.id ? null : item.id)}
               >
-                <p className=" line-clamp-1">{item?.user?.username}</p>
-                <p  className=" max-md:hidden">
-                  {new Intl.DateTimeFormat("en-IN").format(
-                    new Date(item.createdAt)
-                  )}
-                </p>
-                <p className={`${item.status.toLowerCase() === 'scheduled' ? 'text-[#24ae7c] bg-[#0d2a1f]' : item.status.toLowerCase() === 'pending' ? 'bg-[#152432] text-[#79b5ec]' : 'bg-[#3e1716] text-[#f37877]'} w-fit max-md:px-1 max-md:text-xs px-3 py-[2px] flex items-center gap-1 rounded-2xl`}  >
-                {item.status.toLowerCase() === 'scheduled' ? <MdDone /> : item.status.toLowerCase() === 'pending' ? <GoHourglass /> : <RxCross2 /> }
-                  {item?.status}</p>
+                <IoIosTimer className=" text-lg"/>
+                Schedule
+              </p>
+            )}
 
-                <p className=" line-clamp-1">{item.doctor.name}</p>
+            {openScheduleId === item.id && (
+              <ScheduleForm data={item} setOpen={() => setOpenScheduleId(null)} />
+            )}
 
-                {item.schedule ? (
-                  <p>{new Intl.DateTimeFormat("en-IN").format(new Date(item.schedule))}</p>
-                ) : (
-                  <p
-                    className="cursor-pointer flex items-center gap-2 px-3 max-md:px-1 max-md:text-sm py-1 w-fit rounded-lg text-[#24ae7c] bg-[#0d2a1f]"
-                    onClick={() => setOpenScheduleId(openScheduleId === item.id ? null : item.id)}
-                  >
-                    <IoIosTimer className=" text-lg"/>
-                    Schedule
-                  </p>
-                )}
+            <p>
+              <button
+                onClick={() => setOpenCancelId(openCancelId === item.id ? null : item.id)}
+                className="bg-[#f694ff] text-white px-2 py-1 rounded-md disabled:cursor-not-allowed"
+                disabled={item.status.toLowerCase() === 'cancelled'}
+                >
+                Cancel
+              </button>
+            </p>
 
-                {openScheduleId === item.id && (
-                  <ScheduleForm data={item} setOpen={() => setOpenScheduleId(null)} />
-                )}
-
-                <p>
-                  <button
-                    onClick={() => setOpenCancelId(openCancelId === item.id ? null : item.id)}
-                    className="bg-[#f694ff] text-white px-2 py-1 rounded-md disabled:cursor-not-allowed"
-                    disabled={item.status.toLowerCase() === 'cancelled'}
-                    >
-                    Cancel
-                  </button>
-                </p>
-
-                {openCancelId === item.id && (
-                  <Cancelform data={item} setOpen={() => setOpenCancelId(null)} />
-                )}
-              </div>
-            ))
-          ) : (
-            <p>No appointments found.</p>
-          )}
-        </div>
+            {openCancelId === item.id && (
+              <Cancelform data={item} setOpen={() => setOpenCancelId(null)} />
+            )}
+          </div>
+        ))
+      ) : (
+        <p>No appointments found.</p>
+      )}
+    </div>
        <Pagination page={page} count={count} />
       </div>
     </>
