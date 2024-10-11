@@ -103,3 +103,7 @@ body{
 .cl-internal-1dauvpw{
   display: none;
 }
+
+body::-webkit-scrollbar{
+  width: 0;
+}

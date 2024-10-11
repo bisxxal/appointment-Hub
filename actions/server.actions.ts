@@ -42,16 +42,16 @@ export const Allappointments = async (page: number ) => {
     }
   };
 export const userAppointments = async (page: number ,   userId:string) => {
-    try {
-    
-      
-      if(!userId){
-        // console.log("in server " , userId);
+    try { 
+      if(!userId){ 
+        console.log('userid non');
+        
         return { users: [], totalAppointments: 0 }; 
-      }
-      
-
-      const [users , totalAppointments] = await prisma.$transaction([
+      } 
+   console.log(userId);
+   
+      const [  users , totalAppointments] = await prisma.$transaction([
+        
         prisma.appointment.findMany({
           take:6,
           skip:6*(page-1) ,
@@ -83,9 +83,14 @@ export const userAppointments = async (page: number ,   userId:string) => {
             }
           }
         }),
-        prisma.appointment.count()
+        prisma.appointment.count({
+          where:{
+            userId:userId
+          },
+        })
       ])
-      
+
+       
       return { users: users || [], totalAppointments }; 
     } catch (error) {
       return { users: [], totalAppointments: 0 }; 
@@ -94,23 +99,26 @@ export const userAppointments = async (page: number ,   userId:string) => {
   
 
 
-export const createdAppointment = async ({doctorId , hospitalId} :{doctorId : any , hospitalId :any} ) => {
+export const createdAppointment = async ({doctorId , hospitalId , userId} :{doctorId : string , hospitalId :string , userId:string} ) => {
     try {
-        // console.log(doctorId ,  hospitalId);        
+       
+      if(!doctorId && !hospitalId && !userId){
+        return {success : false}; 
+      } 
         const appointment = await prisma.appointment.create({
             data: {
               hospitalId: hospitalId, 
-              userId: '6706a0ab86b63338a36c44d6',
+              userId: userId,
               doctorId: doctorId,
               status: 'pending',
               cancelled: false,
             },
           });
+ 
         return {success : true , id: appointment.id};
         
       } catch (error) {
-        return {success : false};
-        // return false;       
+        return {success : false}; 
     }
 }
 export const findAppointment = async (id: string|null) => {
@@ -137,7 +145,7 @@ export const selectDoctor = async () => {
             select: {
                 id: true,
                 name: true,
-               
+                
             }
         })
         return hospital;
@@ -220,19 +228,18 @@ export const scheduleAppointment = async ({ userId, appointmentId, schedule }: {
         // userId: userId,
       },
       data: {
-        status: 'scheduled',
+        status: 'Scheduled',
         schedule: schedule,
       },
     });
-    
-    // console.log(app , 'Scheduled');
+     
     revalidatePath('/admin')
   } catch (error) {
     console.error('Error updating appointment:', error);
   }
 };
 
-export const CancelAppointment = async ({ userId , appointmentId ,status } : { appointmentId :string , userId : string , status : string , schedule : any}) => {  
+export const CancelAppointment = async ({ userId , appointmentId   } : { appointmentId :string , userId : string ,  }) => {  
 
   try {
     await prisma.appointment.update({
@@ -241,10 +248,11 @@ export const CancelAppointment = async ({ userId , appointmentId ,status } : { a
         userId: userId 
       },
       data:{
-        status: status,
+        status: 'Cancelled',
         schedule: null
       }
     })
+    revalidatePath('/admin')
   } catch (error) {
 
   }
@@ -272,6 +280,20 @@ export const createUser = async (user:any) => {
     return JSON.parse(JSON.stringify(newUser))
   } catch (error) {
     console.log('error when creating user' , error);
+    
+  }
+}
+
+export const createdDoctor = async ()=>{
+  try {
+    const doctor = await prisma.doctor.create({
+      data:{
+        name:'lalala',
+
+      }
+    })
+    return true;
+  } catch (error) {
     
   }
 }

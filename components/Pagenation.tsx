@@ -34,7 +34,7 @@ const Pagination = ({ page, count }: { page: number; count: number }) => {
               <button
                 key={pageIndex}
                 className={`px-2 rounded-sm ${
-                  page == pageIndex ? " bg-lamaSky " : " "
+                  page == pageIndex ? " bg-blue-400 text-white " : " bg-[#09090b] "
                 }`}
                 onClick={() => {
                   changePage(pageIndex);
