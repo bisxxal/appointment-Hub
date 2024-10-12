@@ -36,7 +36,8 @@ export const Allappointments = async (page: number ) => {
         prisma.appointment.count()
        ]);
 
-      return { users: users || [], totalAppointments };  
+      // return { users: users || [], totalAppointments };  
+      return JSON.parse(JSON.stringify({ users: users || [], totalAppointments }));
     } catch (error) {
       return { users: [], totalAppointments: 0 }; 
     }
@@ -91,7 +92,8 @@ export const userAppointments = async (page: number ,   userId:string) => {
       ])
 
        
-      return { users: users || [], totalAppointments }; 
+      // return { users: users || [], totalAppointments }; 
+      return JSON.parse(JSON.stringify({ users: users || [], totalAppointments }));
     } catch (error) {
       return { users: [], totalAppointments: 0 }; 
     }
@@ -115,7 +117,7 @@ export const createdAppointment = async ({doctorId , hospitalId , userId} :{doct
             },
           });
  
-        return {success : true , id: appointment.id};
+          return JSON.parse(JSON.stringify({success : true , id: appointment.id}));
         
       } catch (error) {
         return {success : false}; 
@@ -134,7 +136,7 @@ export const findAppointment = async (id: string|null) => {
          status:true
         }
     })
-    return appointment
+    return JSON.parse(JSON.stringify(appointment))
   } catch (error) {
     
   }
@@ -148,7 +150,8 @@ export const selectDoctor = async () => {
                 
             }
         })
-        return hospital;
+        
+        return JSON.parse(JSON.stringify(hospital))
 
     } catch (error) {
         
@@ -173,7 +176,7 @@ export const findDoctor = async (id: string) => {
             }
         })
 
-        return doctor;
+        return JSON.parse(JSON.stringify(doctor))
     } catch (error) {
         
     }
@@ -198,7 +201,7 @@ export const findSpecialization = async (id: string) => {
           }
         })
 
-        return disease;
+        return JSON.parse(JSON.stringify(disease))
     } catch (error) {
         
     }
@@ -213,12 +216,11 @@ export const scheduleAppointment = async ({ userId, appointmentId, schedule }: {
     });
 
     if (!appointment) {
-      console.log('Appointment not found');
+      
       return;
     }
 
-    if (appointment.userId !== userId) {
-      console.log('User ID does not match the appointment');
+    if (appointment.userId !== userId) { 
       return;
     }
 
@@ -232,8 +234,7 @@ export const scheduleAppointment = async ({ userId, appointmentId, schedule }: {
         schedule: schedule,
       },
     });
-     
-    revalidatePath('/admin')
+      
   } catch (error) {
     console.error('Error updating appointment:', error);
   }
@@ -252,7 +253,7 @@ export const CancelAppointment = async ({ userId , appointmentId   } : { appoint
         schedule: null
       }
     })
-    revalidatePath('/admin')
+    
   } catch (error) {
 
   }
@@ -292,7 +293,7 @@ export const createdDoctor = async ()=>{
 
       }
     })
-    return true;
+    return JSON.parse(JSON.stringify(true))
   } catch (error) {
     
   }
