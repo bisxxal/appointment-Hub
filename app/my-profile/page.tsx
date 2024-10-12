@@ -40,7 +40,7 @@ import { redirect } from "next/navigation";
           <p>Scheduled Date</p> 
         </div>
              {
-                app.users.map((item) => {
+                app.users.map((item:any) => {
                     return (
                         <div key={item.id} className="grid grid-cols-5 gap-2 overflow-x-auto p-2 py-4 transition-all even:bg-[#6494ed0b] border-b-2 h-full hover:bg-[#d375dcb9] border-[#9e9e9e1f] ">
                             <p className="text-sm h-full line-clamp-1 ">{item.doctor?.name}</p>
